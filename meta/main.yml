@@ -1,12 +1,10 @@
 galaxy_info:
+  role_name: cisco_ios_update
   author: oliverl-21
   description: Cisco IOS Update role
   company: none
-  role_name: cisco_ios_update
   issue_tracker_url: https://github.com/oliverl-21/ansible-role-cisco-ios-update/issues
-
   license: GPL-3.0-or-later
-
   min_ansible_version: "2.10"
 
   platforms:

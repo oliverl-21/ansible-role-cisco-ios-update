@@ -1,12 +1,8 @@
-ansible-role-cisco-ios-update
-=============================
-
-Cisco IOS Update role - Work in Progress
----------------------
+# Cisco IOS Update role - Work in Progress
 
 use at your own risk!
 
-### Current Tasks
+## Current Tasks
 
 1. get current version and cleanup
 2. copy image from server to device
@@ -15,17 +11,15 @@ use at your own risk!
 5. wait for device to be online again
 6. verify version and commit update
 
-### ToDo
+## ToDo
 
 support further devices
 
-Requirements
-------------
+## Requirements
 
 Firmware Image on a for the device accesible server
 
-Role Variables
---------------
+## Role Variables
 
 - ansible_network_cli_ssh_type: paramiko
 - updver: 17.07.01a
@@ -35,8 +29,8 @@ Role Variables
 - updpath: /
 - ansible_command_timeout: 1800
 
-Dependencies
-------------
+## Dependencies
+
 
 Roles: none
 
@@ -45,8 +39,7 @@ Collection:
 - cisco.ios
 - ansible.netcommon
 
-Example Playbook
-----------------
+## Example Playbook
 
 TODO
 
@@ -68,12 +61,10 @@ TODO
 
 ```
 
-License
--------
+## License
 
 GPL-3.0-or-later
 
-Author Information
-------------------
+## Author Information
 
 oliverl-21
