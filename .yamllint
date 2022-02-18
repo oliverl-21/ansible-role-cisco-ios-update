@@ -1,0 +1,11 @@
+extends: relaxed
+
+rules:
+  line-length:
+    max: 120
+    level: warning
+  comments-indentation: disable
+  hyphens:
+    max-spaces-after: 2
+  new-lines:
+    type: unix
