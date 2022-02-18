@@ -1,0 +1,20 @@
+---
+# handlers for IOS Update Tasks
+
+- name: wait
+  wait_for:
+    host: "{{ ansible_host }}"
+    port: 22
+    delay: 60
+    timeout: 300
+  delegate_to: localhost
+
+- name: clean_firmware
+  when: ansible_facts.net_model == "C8000V"
+  cisco.ios.ios_command:
+    commands:
+      - command: 'request platform software package install rp 0 commit'
+      - command: 'request platform software package clean'
+        prompt: 'Do you want to proceed?'
+        answer: 'y'
+    wait_for: result[1] contains proceed or SUCCESS

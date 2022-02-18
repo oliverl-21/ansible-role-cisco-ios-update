@@ -1,0 +1,19 @@
+---
+# tasks file for Cisco IOS Update tasks
+- name: Gather default facts
+  cisco.ios.ios_facts:
+    gather_subset: min
+
+- name: output current version
+  debug:
+    msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
+  changed_when: ansible_facts.net_version != updver
+  notify:
+    - clean_firmware
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
+- name: 8kv
+  ignore_unreachable: yes
+  import_tasks: 8kv.yml
