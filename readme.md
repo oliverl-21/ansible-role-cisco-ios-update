@@ -1,8 +1,10 @@
 ansible-role-cisco-ios-update
 =============================
 
-Cisco IOS Update role
+Cisco IOS Update role - Work in Progress
 ---------------------
+
+use at your own risk!
 
 ### Current Tasks
 
