@@ -2,23 +2,23 @@
 # tasks file to update Cisco IOS-XE 8kv
 
 - name: copy firmware file
-  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver
+  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver8k
   cisco.ios.ios_command:
     commands:
-      - command: 'copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfile }} flash:{{ updfile }}'
-        prompt: 'Destination filename \[{{ updfile }}\]?'
+      - command: 'copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfile8k }} flash:{{ updfile8k }}'
+        prompt: 'Destination filename \[{{ updfile8k }}\]?'
         answer: "\r"
     wait_for: result[0] contains copied
 
 - name: install firmware file
-  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver
+  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver8k
   cisco.ios.ios_command:
     commands:
-      - command: 'request platform software package install rp 0 file flash:{{ updfile }}'
+      - command: 'request platform software package install rp 0 file flash:{{ updfile8k }}'
     wait_for: result[0] contains SUCCESS
 
 - name: save and reboot
-  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver
+  when: ansible_facts.net_model == "C8000V" and ansible_facts.net_version != updver8k
   cisco.ios.ios_command:
     commands:
       - command: "write memory"
@@ -43,6 +43,6 @@
 - name: output current version
   debug:
     msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
-  changed_when: ansible_facts.net_version == updver
+  changed_when: ansible_facts.net_version == updver8k
   notify:
     - clean_firmware

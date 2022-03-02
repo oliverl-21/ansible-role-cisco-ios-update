@@ -1,1 +1,12 @@
 ---
+updmethod:
+updserver:
+updpath:
+
+# Cisco 8k File and Version
+updfile8k:
+updver8k:
+
+# Cisco C9800 File and Version
+updfilec9:
+updverc9:

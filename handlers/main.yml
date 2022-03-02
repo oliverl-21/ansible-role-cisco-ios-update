@@ -18,3 +18,14 @@
         prompt: 'Do you want to proceed?'
         answer: 'y'
     wait_for: result[1] contains proceed or SUCCESS
+
+- name: clean_firmwarec9
+  cisco.ios.ios_command:
+    commands:
+      - command: 'install commit'
+      - command: 'install remove inactive'
+        prompt: 'Do you want to remove'
+        answer: 'y'
+    wait_for:
+      - result[0] contains Finished commit
+      - result[1] contains above

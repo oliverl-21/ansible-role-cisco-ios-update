@@ -1,0 +1,48 @@
+---
+# tasks file to update Cisco IOS-XE C9800
+
+- name: copy firmware to flash
+  when: '"C9800" in ansible_facts.net_model and ansible_facts.net_version != updverc9'
+  cisco.ios.ios_command:
+    commands:
+      - command: 'copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfilec9 }} flash:{{ updfilec9 }}'
+        prompt: 'Destination filename \[{{ updfilec9 }}\]?'
+        answer: "\r"
+    wait_for: result[0] contains copied
+
+- name: install firmware from flash
+  when: '"C9800" in ansible_facts.net_model and ansible_facts.net_version != updver'
+  cisco.ios.ios_command:
+    commands:
+      - command: 'install add file bootflash:{{ updfilec9 }}'
+    wait_for: result[0] contains SUCCESS
+
+- name: activate firmware
+  when: '"C9800" in ansible_facts.net_model and ansible_facts.net_version != updver'
+  cisco.ios.ios_command:
+    commands:
+      - command: "write memory"
+      - command: 'install activate'
+        prompt: 'This operation may'
+        answer: "y"
+    wait_for: result[0] contains OK
+  changed_when: True
+  notify:
+    - wait
+
+- name: resetconnection
+  meta: reset_connection
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
+- name: Gather default facts
+  cisco.ios.ios_facts:
+    gather_subset: min
+
+- name: output current version
+  debug:
+    msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
+  changed_when: ansible_facts.net_version == updverc9
+  notify:
+    - clean_firmwarec9
