@@ -2,7 +2,7 @@
 updmethod:
 updserver:
 updpath:
-
+ansible_command_timeout: 900
 # Cisco 8k File and Version
 updfile8k:
 updver8k:
