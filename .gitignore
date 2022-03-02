@@ -2,3 +2,7 @@
 *.cfg
 .github
 *.bin
+
+# exclude
+!.gitkeep
+!csv.py
