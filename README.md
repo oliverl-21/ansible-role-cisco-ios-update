@@ -11,12 +11,13 @@ Supported Devices:
 
 ## Current Tasks
 
-1. get current version and cleanup uncommited changes or old images
-2. copy image from server to device
-3. unpack image in install mode on device
-4. save and reboot
-5. wait for device to be online again
-6. verify version, commit update and cleanup
+1. get current version and compare to target version
+2. clean uncommited and unused firmware
+3. copy image from server to device
+4. unpack image in install mode on device
+5. save and reboot
+6. wait for device to be online again
+7. verify version, commit update and cleanup
 
 ## ToDo
 
@@ -46,17 +47,16 @@ Firmware Image on a for the device accesible server
 
 ## Dependencies
 
-
 Roles: none
 
-Collection:
+### Collection:
 
 - cisco.ios
 - ansible.netcommon
 
 ## Example Playbook
 
-TODO
+ToDo
 
 ```yaml
 ---
