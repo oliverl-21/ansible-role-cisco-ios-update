@@ -42,14 +42,13 @@ Firmware Image on a for the device accesible server
 
 ### Catalyst 9800 variables
 
-- updfilec9: 'version'
 - updverc9: 'filename'
+- updfilec9: 'version'
 
 ## Dependencies
 
 Roles: none
-
-### Collection:
+Collection:
 
 - cisco.ios
 - ansible.netcommon
