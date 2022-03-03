@@ -17,3 +17,7 @@
 - name: 8kv
   ignore_unreachable: yes
   import_tasks: 8kv.yml
+
+- name: 9800
+  ignore_unreachable: yes
+  import_tasks: wlc9k.yml
