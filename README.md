@@ -7,7 +7,7 @@ Ansible role to update Cisco IOS-XE devices
 Supported Devices:
 
 - Catalyst 8000v
-- Catalyst 9800-CL
+- Catalyst 9800-CL, WiP
 
 ## Current Tasks
 
@@ -21,7 +21,9 @@ Supported Devices:
 
 ## ToDo
 
-support further devices
+- support further devices
+- error handling
+- conditional tasks, pyats currently not supported for Apple m1 
 
 ## Requirements
 
