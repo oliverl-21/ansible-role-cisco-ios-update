@@ -15,10 +15,5 @@
   meta: flush_handlers
 
 - name: install XE
-  # when: ansible_facts.net_version >= '16.10.01' and ansible_facts.net_iostype == "IOS-XE"
   ignore_unreachable: true
   import_tasks: install.yml
-
-# - name: 9800
-  # ignore_unreachable: yes
-  # import_tasks: wlc9k.yml
