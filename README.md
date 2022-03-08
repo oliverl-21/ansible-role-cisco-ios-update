@@ -1,3 +1,5 @@
+[![Release](https://github.com/oliverl-21/ansible-role-cisco-ios-update/actions/workflows/release.yml/badge.svg)](https://github.com/oliverl-21/ansible-role-cisco-ios-update/actions/workflows/release.yml)
+
 # Cisco IOS Update role - Work in Progress
 
 use at your own risk!
