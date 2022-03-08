@@ -2,33 +2,35 @@
 
 use at your own risk!
 
-Ansible role to update Cisco IOS-XE devices
+Ansible role to update Cisco IOS-XE Devices
 
-Supported Devices:
+tested Devices:
 
 - Catalyst 8000v
 - Catalyst 9800-CL, WiP
 
 ## Current Tasks
 
-1. get current version and compare to target version
-2. clean uncommited and unused firmware
-3. copy image from server to device
-4. unpack image in install mode on device
-5. save and reboot
-6. wait for device to be online again
-7. verify version, commit update and cleanup
+- get current Version and compare to target Version
+- clean uncommited and unused firmware if the device is an IOS-XE Device, else skip
+- assert that the Device is an IOS-XE and runs at least 16.10.01
+- if true all following tasks will run only if current version and target version are different
+  - copy image from server to device
+  - unpack image in install mode on device
+  - save and reboot
+  - wait for device to be online again
+  - verify version, commit update and cleanup
 
 ## ToDo
 
-- support further devices
+- test further Devices
 - error handling
 - conditional tasks, pyats currently not supported for Apple m1
-- implement old xe mechanism prior to x
+- implement old xe mechanism prior to v16.10.01
 
 ## Requirements
 
-Firmware Image on a for the device accesible server
+Firmware Image on a for the device accesible server (e.g. TFTP, HTTP, FTP)
 
 ## Role Variables
 
@@ -38,15 +40,9 @@ Firmware Image on a for the device accesible server
 - updpath: /
 - ansible_command_timeout: 900
 
-### Catalyst 8000v variables
+### Update File Variables
 
-- updver8k: 'version'
-- updfile8k: 'filename'
-
-### Catalyst 9800 variables
-
-- updverc9: 'filename'
-- updfilec9: 'version'
+- updver: 'version'
 
 ## Dependencies
 
@@ -68,8 +64,7 @@ ToDo
     - cisco-ios-update
   vars:
     ansible_network_cli_ssh_type: paramiko
-    updver8k: 17.07.01a
-    updfile8k: c8000v-universalk9.17.07.01a.SPA.bin
+    updver: 17.07.01a
     updserver: 198.18.168.3:8000
     updmethod: http
     updpath: /
