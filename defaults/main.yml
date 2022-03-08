@@ -10,3 +10,7 @@ updver8k:
 # Cisco C9800 File and Version
 updfilec9:
 updverc9:
+
+# modelless File and Version
+updfile:
+updver:

@@ -23,7 +23,8 @@ Supported Devices:
 
 - support further devices
 - error handling
-- conditional tasks, pyats currently not supported for Apple m1 
+- conditional tasks, pyats currently not supported for Apple m1
+- implement old xe mechanism prior to x
 
 ## Requirements
 

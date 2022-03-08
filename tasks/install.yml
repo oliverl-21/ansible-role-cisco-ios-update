@@ -1,0 +1,57 @@
+---
+# tasks file to update Cisco IOS-XE greater than 16.10.01
+- name: verify min Version and IOS type
+  assert:
+    that:
+      - ansible_facts.net_version >= "16.10.01"
+      - ansible_facts.net_iostype == "IOS-XE"
+    fail_msg: "requirements not met"
+    success_msg: "requirements met"
+
+- name: copy firmware to flash
+  when: 'ansible_facts.net_version != updver'
+  cisco.ios.ios_command:
+    commands:
+      - command: 'copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfile }} flash:{{ updfile }}'
+        prompt: 'Destination filename \[{{ updfile }}\]?'
+        answer: "\r"
+    wait_for: result[0] contains copied
+
+- name: install firmware from flash
+  when: 'ansible_facts.net_version != updver'
+  cisco.ios.ios_command:
+    commands:
+      - command: 'install add file bootflash:{{ updfile }}'
+    wait_for: result[0] contains SUCCESS
+
+- name: activate firmware
+  when: 'ansible_facts.net_version != updver'
+  cisco.ios.ios_command:
+    commands:
+      - command: "write memory"
+      - command: 'install activate'
+        prompt: 'This operation may'
+        answer: "y"
+    wait_for: result[0] contains OK
+  changed_when: true
+  register: activate
+  notify:
+    - wait
+
+- name: resetconnection
+  meta: reset_connection
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
+- name: Gather default facts
+  cisco.ios.ios_facts:
+    gather_subset: min
+
+- name: output current version
+  debug:
+    msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
+  changed_when: ansible_facts.net_version == updver
+  when: activate.changed
+  notify:
+    - clean_firmware
