@@ -36,13 +36,23 @@ Firmware Image on a for the device accesible server (e.g. TFTP, HTTP, FTP)
 
 - ansible_network_cli_ssh_type: paramiko
 - updserver: <Server:Port>
-- updmethod: http
+- updmethod: http/ftp/tftp
 - updpath: /
 - ansible_command_timeout: 900
 
 ### Update File Variables
 
-- updver: 'version'
+- updver: 'version' # define your version here like 17.06.02
+
+> **Note:**
+> Filename is build from updver and Ansible Facts net_model.
+> Be aware of lowercase and uppercase letters. In most tested Scenarios the facts are upper but some files are lowercase.
+
+```yml
+# defaults/main.yml
+---
+updfile: '{{ ansible_facts.net_model }}-universalk9.{{ updver }}.SPA.bin'
+```
 
 ## Dependencies
 
@@ -57,6 +67,7 @@ Collection:
 ToDo
 
 ```yaml
+# playbook.yml
 ---
 
 - hosts: 8kv*

@@ -12,5 +12,5 @@ updfilec9:
 updverc9:
 
 # modelless File and Version
-updfile:
+updfile: '{{ ansible_facts.net_model }}-universalk9.{{ updver }}.SPA.bin'
 updver:
