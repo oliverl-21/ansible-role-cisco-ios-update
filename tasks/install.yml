@@ -3,8 +3,8 @@
 - name: verify min Version and IOS type
   assert:
     that:
-      - ansible_facts.net_version >= "16.10.01"
       - ansible_facts.net_iostype == "IOS-XE"
+      - ansible_facts.net_version >= "16.10.01"
     fail_msg: "requirements not met"
     success_msg: "requirements met"
 
