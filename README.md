@@ -86,6 +86,10 @@ ToDo
 
 to provide an update repository for the devices you can start a simple web server with ```pyhton3 -m http.server```. There is also the option for ```net_put``` from ansible-netcommon but scp is slow due to default copp policies on the Cisco devices. In my tests transfering a 1GB file took 9min via SCP versus 2min over HTTP.
 
+## Sample Output
+
+![C9800-CL Sample](c9800-cl-sample.png)
+
 ## License
 
 GPL-3.0-or-later
