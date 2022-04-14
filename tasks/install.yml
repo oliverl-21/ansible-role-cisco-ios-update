@@ -1,7 +1,7 @@
 ---
 # tasks file to update Cisco IOS-XE greater than 16.10.01
 - name: verify min Version and IOS type
-  assert:
+  ansible.builtin.assert:
     that:
       - ansible_facts.net_iostype == "IOS-XE"
       - ansible_facts.net_version >= "16.10.01"
@@ -40,17 +40,17 @@
     - wait
 
 - name: resetconnection
-  meta: reset_connection
+  ansible.builtin.meta: reset_connection
 
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Gather default facts
   cisco.ios.ios_facts:
     gather_subset: min
 
 - name: output current version
-  debug:
+  ansible.builtin.debug:
     msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
   changed_when: ansible_facts.net_version == updver
   when: activate.changed

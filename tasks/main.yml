@@ -5,14 +5,14 @@
     gather_subset: min
 
 - name: output current version
-  debug:
+  ansible.builtin.debug:
     msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
   changed_when: ansible_facts.net_version != updver
   notify:
     - clean_firmware
 
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: install XE
   ignore_unreachable: true
