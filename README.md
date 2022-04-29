@@ -36,15 +36,15 @@ Firmware Image on a for the device accesible server (e.g. TFTP, HTTP, FTP)
 
 ## Role Variables
 
-- ansible_network_cli_ssh_type: paramiko
-- updserver: <Server:Port>
-- updmethod: http/ftp/tftp
-- updpath: /
-- ansible_command_timeout: 900
+- ansible_network_cli_ssh_type: ```paramiko```
+- updserver: ```Server:Port```
+- updmethod: ```http/ftp/tftp```
+- updpath: ```/path/to/image```
+- ansible_command_timeout: ```900```
 
 ### Update File Variables
 
-- updver: 'version' # define your version here like 17.06.02
+- updver: ```version number``` # define your version here like 17.06.02
 
 > **Note:**
 > Filename is build from updver and Ansible Facts net_model.
