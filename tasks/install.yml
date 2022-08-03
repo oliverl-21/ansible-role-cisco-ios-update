@@ -18,6 +18,15 @@
         answer: "\r"
     wait_for: result[0] contains copied
 
+- name: send Webex Status
+  community.general.cisco_webex:
+    recipient_type: "{{ webex_recipient_type }}"
+    recipient_id: "{{ webex_recipient_id }}"
+    msg_type: markdown
+    personal_token: "{{ webex_token }}"
+    msg: "### Firmware Copied to {{ ansible_facts.net_hostname }}"
+  when: ansible_facts.net_version != updver
+
 - name: install firmware from flash
   when: 'ansible_facts.net_version != updver'
   cisco.ios.ios_command:
@@ -39,6 +48,15 @@
   notify:
     - wait
 
+- name: send Webex Status
+  community.general.cisco_webex:
+    recipient_type: "{{ webex_recipient_type }}"
+    recipient_id: "{{ webex_recipient_id }}"
+    msg_type: markdown
+    personal_token: "{{ webex_token }}"
+    msg: "### Firmware activated and rebooting {{ ansible_facts.net_hostname }}"
+  when: ansible_facts.net_version != updver
+
 - name: resetconnection
   ansible.builtin.meta: reset_connection
 
@@ -56,3 +74,12 @@
   when: activate.changed
   notify:
     - clean_firmware
+
+- name: send Webex Status
+  community.general.cisco_webex:
+    recipient_type: "{{ webex_recipient_type }}"
+    recipient_id: "{{ webex_recipient_id }}"
+    msg_type: markdown
+    personal_token: "{{ webex_token }}"
+    msg: "### Firmware Udpate to {{ ansible_facts.net_version }} completed on {{ ansible_facts.net_hostname }}"
+  when: ansible_facts.net_version == updver and activate.changed

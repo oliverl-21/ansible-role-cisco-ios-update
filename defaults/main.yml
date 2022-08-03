@@ -14,3 +14,8 @@ updverc9:
 # modelless File and Version
 updfile: '{{ ansible_facts.net_model }}-universalk9.{{ updver }}.SPA.bin'
 updver:
+
+# Webex vars
+webex_token:
+webex_recipient_type: toPersonEmail
+webex_recipient_id: 
