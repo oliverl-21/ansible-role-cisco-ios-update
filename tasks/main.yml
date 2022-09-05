@@ -7,7 +7,7 @@
 - name: output current version
   ansible.builtin.debug:
     msg: "{{ ansible_facts.net_model }} running Version: {{ ansible_facts.net_version }}"
-  changed_when: ansible_facts.net_version != updver
+  changed_when: ansible_facts.net_version != updver 
   notify:
     - clean_firmware
 
@@ -18,7 +18,7 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "### {{ ansible_facts.net_hostname }} needs to be updated.\n- Current Version:{{ ansible_facts.net_version }}\n- Target Version: {{ updver }}\n\n### Starting Install Task"
-  when: ansible_facts.net_version != updver
+  when: ansible_facts.net_version != updver and webex_recipient_id != None
 
 - name: send Webex status
   community.general.cisco_webex:
@@ -27,7 +27,7 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "## {{ ansible_facts.net_hostname }} is already on target Version.\n- Current Version:{{ ansible_facts.net_version }}\n- Target Version: {{ updver }}\n\n### Install Task stopped for {{ ansible_facts.net_hostname }}"
-  when: ansible_facts.net_version == updver
+  when: ansible_facts.net_version == updver and webex_recipient_id != None
 
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
   ansible.builtin.meta: flush_handlers

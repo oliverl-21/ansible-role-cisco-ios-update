@@ -38,13 +38,21 @@ Firmware Image on a for the device accesible server (e.g. TFTP, HTTP, FTP)
 
 - ansible_network_cli_ssh_type: ```paramiko```
 - updserver: ```Server:Port```
-- updmethod: ```http/ftp/tftp```
+- updmethod: ```http, ftp, tftp```
 - updpath: ```/path/to/image```
 - ansible_command_timeout: ```900```
 
+To Send a Webex a notification based on the state of the task the following can be configured. If the ```webex_Recipient_id``` is empty the tasks are skipped.
+
+- webex_token: ```webex api token```
+- webex_recipient_type: ```toPersonEmail```
+- webex_recipient_id: ```Email of Recipient```
+
+further options: [Webex Module Documentation](https://docs.ansible.com/ansible/latest/collections/community/general/cisco_webex_module.html)
+
 ### Update File Variables
 
-- updver: ```version number``` # define your version here like 17.06.02
+- updver: ```version number``` define your version here like 17.06.02
 
 > **Note:**
 > Filename is build from updver and Ansible Facts net_model.
@@ -63,6 +71,7 @@ Collection:
 
 - cisco.ios
 - ansible.netcommon
+- community.general.cisco_webex
 
 ## Example Playbook
 
@@ -82,9 +91,11 @@ ToDo
     updmethod: http
     updpath: /
     ansible_command_timeout: 900
+    webex_token: # your Webex API token
+    webex_recipient_id: # leave empty if webex shouldn't be used
 ```
 
-to provide an update repository for the devices you can start a simple web server with ```pyhton3 -m http.server```. There is also the option for ```net_put``` from ansible-netcommon but scp is slow due to default copp policies on the Cisco devices. In my tests transfering a 1GB file took 9min via SCP versus 2min over HTTP.
+to provide an update repository for the devices you can start a simple web server with ```pyhton3 -m http.server```. There is also the option for ```net_put``` from ansible-netcommon but scp is slow due to default copp policies on the Cisco devices. In my tests transfering a 1GB file took 9min via SCP versus 2min over HTTP on a 1Gbit/s connection.
 
 ## Sample Output
 

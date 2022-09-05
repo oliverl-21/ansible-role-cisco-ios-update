@@ -25,7 +25,7 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "### Firmware Copied to {{ ansible_facts.net_hostname }}"
-  when: ansible_facts.net_version != updver
+  when: ansible_facts.net_version != updver and webex_recipient_id != None
 
 - name: install firmware from flash
   when: 'ansible_facts.net_version != updver'
@@ -55,7 +55,7 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "### Firmware activated and rebooting {{ ansible_facts.net_hostname }}"
-  when: ansible_facts.net_version != updver
+  when: ansible_facts.net_version != updver and webex_recipient_id != None
 
 - name: resetconnection
   ansible.builtin.meta: reset_connection
@@ -82,4 +82,4 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "### Firmware Udpate to {{ ansible_facts.net_version }} completed on {{ ansible_facts.net_hostname }}"
-  when: ansible_facts.net_version == updver and activate.changed
+  when: ansible_facts.net_version == updver and activate.changed  and webex_recipient_id != None

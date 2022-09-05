@@ -18,4 +18,4 @@ updver:
 # Webex vars
 webex_token:
 webex_recipient_type: toPersonEmail
-webex_recipient_id: 
+webex_recipient_id:
