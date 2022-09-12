@@ -10,13 +10,13 @@
     quiet: true
 
 - name: copy firmware to flash
-  when: 'ansible_facts.net_version != updver'
   cisco.ios.ios_command:
     commands:
-      - command: 'copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfile }} flash:{{ updfile }}'
+      - command: "copy {{ updmethod }}://{{ updserver }}{{ updpath }}{{ updfile }} flash:{{ updfile }}"
         prompt: 'Destination filename \[{{ updfile }}\]?'
         answer: "\r"
     wait_for: result[0] contains copied
+  when: ansible_facts.net_version != updver
 
 - name: send Webex Status
   community.general.cisco_webex:
@@ -82,4 +82,4 @@
     msg_type: markdown
     personal_token: "{{ webex_token }}"
     msg: "### Firmware Udpate to {{ ansible_facts.net_version }} completed on {{ ansible_facts.net_hostname }}"
-  when: ansible_facts.net_version == updver and activate.changed  and webex_recipient_id != None
+  when: ansible_facts.net_version == updver and activate.changed and webex_recipient_id != None

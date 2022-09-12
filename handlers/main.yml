@@ -2,7 +2,7 @@
 # handlers for IOS Update Tasks
 
 - name: wait
-  wait_for:
+  ansible.builtin.wait_for:
     host: "{{ ansible_host }}"
     port: 22
     delay: 60
