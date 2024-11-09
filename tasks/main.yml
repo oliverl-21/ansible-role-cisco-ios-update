@@ -17,7 +17,10 @@
     recipient_id: "{{ webex_recipient_id }}"
     msg_type: markdown
     personal_token: "{{ webex_token }}"
-    msg: "### {{ ansible_facts.net_hostname }} needs to be updated.\n- Current Version:{{ ansible_facts.net_version }}\n- Target Version: {{ updver }}\n\n### Starting Install Task"
+    msg: |
+      "### {{ ansible_facts.net_hostname }} needs to be updated.
+      - Current Version:{{ ansible_facts.net_version }}
+      - Target Version: {{ updver }}\n\n### Starting Install Task"
   when: ansible_facts.net_version != updver and webex_recipient_id != None
 
 - name: send Webex status
@@ -26,7 +29,12 @@
     recipient_id: "{{ webex_recipient_id }}"
     msg_type: markdown
     personal_token: "{{ webex_token }}"
-    msg: "### {{ ansible_facts.net_hostname }} is already on target Version.\n- Current Version:{{ ansible_facts.net_version }}\n- Target Version: {{ updver }}\n\n### Install Task stopped for {{ ansible_facts.net_hostname }}"
+    msg: |
+      "### {{ ansible_facts.net_hostname }} is already on target Version.
+      - Current Version:{{ ansible_facts.net_version }}
+      - Target Version: {{ updver }}
+
+      ### Install Task stopped for {{ ansible_facts.net_hostname }}"
   when: ansible_facts.net_version == updver and webex_recipient_id != None
 
 - name: Force all notified handlers to run at this point, not waiting for normal sync points
@@ -34,4 +42,4 @@
 
 - name: install XE
   ignore_unreachable: true
-  import_tasks: install.yml
+  ansible.builtin.import_tasks: install.yml
